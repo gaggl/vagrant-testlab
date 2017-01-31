@@ -1,10 +1,37 @@
 ---
 nodes:
-    - name: centos7
-      hostname: node1.example.vagrant
+    - name: monitoring
+      aliases: "kafka.gaggle.vagrant logs.gaggl.vagrant kibana.gaggl.vagrant metrics.gaggl.vagrant grafana.gaggl.vagrant alert.gaggl.vagrant dashboard.gaggl.vagrant"
+      cpus: 2
+      memory: 4096
+      hostname: node1.gaggl.vagrant
       box: bento/centos-7.3
-      ip: 192.168.42.42
+      ip: 192.168.28.42
       ports:
         - guest: 22
-          host: 4242
-virtualbox_group: '/Vagrant/example'
+          host: 2842
+    - name: dc1
+      aliases: "dc1.gaggl.vagrant"
+      hostname: node2.gaggl.vagrant
+      box: bento/centos-7.3
+      ip: 192.168.28.43
+      ports:
+        - guest: 22
+          host: 2843
+    - name: dc2
+      aliases: "dc2.gaggl.vagrant"
+      hostname: node3.gaggl.vagrant
+      box: bento/centos-7.3
+      ip: 192.168.28.44
+      ports:
+        - guest: 22
+          host: 2844
+    - name: proxy
+      aliases: "proxy.gaggl.vagrant"
+      hostname: node4.gaggl.vagrant
+      box: bento/centos-7.3
+      ip: 192.168.28.49
+      ports:
+        - guest: 22
+          host: 2849
+virtualbox_group: '/Vagrant/gaggl.io'

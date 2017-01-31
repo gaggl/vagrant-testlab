@@ -1,0 +1,39 @@
+---
+classes:
+ - roles::all
+profiles::elasticsearch::manage_repo: true
+profiles::grafana::manage_package_repo: true
+profiles::influxdb::manage_repos: true
+profiles::kafka::install_method: archive
+profiles::kafka::zookeeper_config:
+  'broker.id': '1'
+  'inter.broker.protocol.version': '0.10.1.0'
+  'log.dir': '/opt/kafka/data'
+  'zookeeper.connect': '%{::ipaddress_enp0s8}:2181'
+profiles::nginx::vhosts:
+  logs.gaggl.vagrant:
+    listen_ip: "%{::ipaddress_enp0s8}"
+    listen_port: 9200
+    proxy: 'http://127.0.0.1:9200'
+  kibana.gaggl.vagrant:
+    proxy: 'http://127.0.0.1:5601'
+  grafana.gaggl.vagrant:
+    proxy: 'http://127.0.0.1:3000'
+profiles::zookeeper::cfg_dir: '/etc/zookeeper/conf'
+profiles::zookeeper::cleanup_sh: '/usr/share/zookeeper/bin/zkCleanup.sh'
+profiles::zookeeper::initialize_datastore: true
+profiles::zookeeper::manage_service_file: false
+profiles::zookeeper::packages:
+  - zookeeper
+  - zookeeper-server
+profiles::zookeeper::repo: cloudera
+profiles::zookeeper::service_name: zookeeper-server
+profiles::zookeeper::zoo_dir: '/usr/lib/zookeeper'
+stacks::logging::elasticsearch: true
+stacks::logging::kibana: true
+stacks::metrics::grafana: true
+stacks::metrics::influxdb: true
+stacks::runtime::java: true
+stacks::streaming::kafka: true
+stacks::streaming::zookeeper: true
+stacks::website::nginx: true

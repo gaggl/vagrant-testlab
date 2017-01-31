@@ -1,3 +1,34 @@
 ---
+profiles::collectd::manage_repo: true
+profiles::collectd::plugins:
+  'collectd::plugin::cpu':
+     reportbystate: true
+     reportbycpu: true
+     valuespercentage: true
+  'collectd::plugin::memory': {}
+  'collectd::plugin::uptime': {}
+  'collectd::plugin::write_graphite':
+    carbons:
+     'node1':
+        graphitehost: 'grafana.gaggl.vagrant'
+    carbon_defaults:
+      graphiteport: 2003
+      graphiteprefix: ''
+      protocol: tcp
+profiles::logstash::config_files:
+  input:
+    content: 'input { file { type => "syslog" path => [ "/var/log/test.log" ] } } '
+    order: 100
+  es:
+    content: 'output { elasticsearch { hosts => ["logs.gaggl.vagrant:9200"] } }'
+    order: 899
+  kafka:
+    content: 'output { kafka { bootstrap_servers => "192.168.28.42:9092" topic_id => "monitoring" } }'
+    order: 900
+profiles::logstash::manage_repo: true
+profiles::logstash::version: '2.4.1'
 profiles::firewall::ensure: stopped
 stacks::bootstrap::firewall: true
+stacks::monitoring::collectd: true
+stacks::monitoring::logstash: true
+stacks::runtime::java: true
