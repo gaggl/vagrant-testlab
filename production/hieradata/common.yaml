@@ -17,11 +17,8 @@ profiles::collectd::plugins:
       protocol: tcp
 profiles::logstash::config_files:
   input:
-    content: 'input { file { type => "syslog" path => [ "/var/log/test.log" ] } } '
+    content: 'input { file { type => "syslog" path => [ "/var/log/test.log" ] start_position => "beginning" } } '
     order: 100
-  es:
-    content: 'output { elasticsearch { hosts => ["logs.gaggl.vagrant:9200"] } }'
-    order: 899
   kafka:
     content: 'output { kafka { bootstrap_servers => "192.168.28.42:9092" topic_id => "monitoring" } }'
     order: 900

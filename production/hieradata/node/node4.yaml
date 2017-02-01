@@ -2,9 +2,15 @@
 classes:
   - roles::website
 profiles::logstash::config_files:
+  input:
+    content: 'input { file { type => "syslog" path => [ "/var/log/test.log" ] start_position => "beginning" } } '
+    order: 100
   nginx:
     content: 'input { file { type => "nginx-error" path => [ "/var/log/nginx/*error.log" ] } } '
     order: 200
+  kafka:
+    content: 'output { kafka { bootstrap_servers => "192.168.28.42:9092" topic_id => "monitoring" } }'
+    order: 900
 profiles::nginx::upstreams:
   gaggl:
     members:

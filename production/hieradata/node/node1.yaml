@@ -2,14 +2,24 @@
 classes:
  - roles::all
 profiles::elasticsearch::manage_repo: true
-profiles::grafana::manage_package_repo: true
-profiles::influxdb::manage_repos: true
+profiles::grafana::manage_repo: true
+profiles::influxdb::manage_repo: true
 profiles::kafka::install_method: archive
 profiles::kafka::zookeeper_config:
   'broker.id': '1'
   'inter.broker.protocol.version': '0.10.1.0'
   'log.dir': '/opt/kafka/data'
   'zookeeper.connect': '%{::ipaddress_enp0s8}:2181'
+profiles::logstash::config_files:
+  input:
+    content: 'input { file { type => "syslog" path => [ "/var/log/test.log" ] start_position => "beginning" } } '
+    order: 100
+  kafka:
+    content: 'input { kafka { topic_id => "monitoring" } }'
+    order: 101
+  es:
+    content: 'output { elasticsearch { } }'
+    order: 900
 profiles::nginx::vhosts:
   logs.gaggl.vagrant:
     listen_ip: "%{::ipaddress_enp0s8}"
@@ -29,10 +39,10 @@ profiles::zookeeper::packages:
 profiles::zookeeper::repo: cloudera
 profiles::zookeeper::service_name: zookeeper-server
 profiles::zookeeper::zoo_dir: '/usr/lib/zookeeper'
+stacks::database::influxdb: true
 stacks::logging::elasticsearch: true
 stacks::logging::kibana: true
 stacks::metrics::grafana: true
-stacks::metrics::influxdb: true
 stacks::runtime::java: true
 stacks::streaming::kafka: true
 stacks::streaming::zookeeper: true
