@@ -121,7 +121,7 @@ Vagrant.configure("2") do |config|
         srv.vm.provision :puppet do |puppet|
           puppet.environment = "#{environment}"
           puppet.environment_path = "."
-          puppet.hiera_config_path = "#{environment}/hiera.yaml"
+          puppet.hiera_config_path = 'hiera.yaml'
         end
       end
     end
