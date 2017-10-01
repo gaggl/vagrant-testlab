@@ -1,8 +1,0 @@
----
-# Managed by puppet
-:backends:
-  - yaml
-:hierarchy:
-  - "node/%{::hostname}"
-  - "environment/%{::environment}"
-  - "common"

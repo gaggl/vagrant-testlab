@@ -1,0 +1,16 @@
+---
+classes:
+ - roles::logging
+profiles::logging::elasticsearch: true
+profiles::logging::elasticsearch::manage_repo: true
+profiles::logging::kibana: true
+profiles::logging::kibana::manage_repo: true
+profiles::runtime::java: true
+profiles::website::nginx: true
+profiles::website::nginx::vhosts:
+  kibana.gaggl.vagrant:
+    proxy: 'http://127.0.0.1:5601'
+  elk.gaggl.vagrant:
+    listen_ip: '%{::ipaddress_enp0s8}'
+    listen_port: 9200
+    proxy: 'http://127.0.0.1:9200'

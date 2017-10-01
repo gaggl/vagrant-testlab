@@ -1,31 +1,25 @@
 ---
-profiles::collectd::manage_repo: true
-profiles::collectd::plugins:
-  'collectd::plugin::cpu':
-     reportbystate: true
-     reportbycpu: true
-     valuespercentage: true
-  'collectd::plugin::memory': {}
-  'collectd::plugin::uptime': {}
-  'collectd::plugin::write_graphite':
-    carbons:
-     'node1':
-        graphitehost: 'grafana.gaggl.vagrant'
-    carbon_defaults:
-      graphiteport: 2003
-      graphiteprefix: ''
-      protocol: tcp
-profiles::logstash::config_files:
+profiles::bootstrap::firewall: true
+profiles::bootstrap::firewall::ensure: stopped
+profiles::bootstrap::puppet: true
+profiles::bootstrap::puppet::runinterval: 180
+profiles::bootstrap::puppet::splaylimit: 180s
+profiles::bootstrap::repos: true
+profiles::bootstrap::repositories::epel: true
+profiles::monitoring::logstash: true
+profiles::monitoring::logstash::config_files:
   input:
-    content: 'input { file { type => "syslog" path => [ "/var/log/test.log" ] start_position => "beginning" } } '
-    order: 100
-  kafka:
-    content: 'output { kafka { bootstrap_servers => "192.168.28.42:9092" topic_id => "monitoring" } }'
-    order: 900
-profiles::logstash::manage_repo: true
-profiles::logstash::version: '2.4.1'
-profiles::firewall::ensure: stopped
-stacks::bootstrap::firewall: true
-stacks::monitoring::collectd: true
-stacks::monitoring::logstash: true
-stacks::runtime::java: true
+    content: 'input { file { type => "syslog" path => [ "/var/log/messages" ] } } '
+  output:
+    content: 'output { elasticsearch { hosts => ["http://elk.gaggl.vagrant:9200"] } }'
+profiles::monitoring::logstash::manage_repo: true
+profiles::monitoring::prometheus: true
+profiles::orchestration::consul: true
+profiles::orchestration::consul::config:
+  client_addr: '0.0.0.0'
+  data_dir: /opt/consul
+  datacenter: services
+  retry_join:
+    - 192.168.28.42
+profiles::orchestration::consul::options: '-bind=%{::ipaddress_enp0s8} -enable-script-checks -syslog'
+profiles::runtime::java: true

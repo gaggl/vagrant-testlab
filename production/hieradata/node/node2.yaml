@@ -4,10 +4,9 @@ classes:
 profiles::orchestration::consul::config:
   client_addr: '0.0.0.0'
   data_dir: /opt/consul
-  datacenter: dc1
+  datacenter: dc2
   retry_join:
     - 192.168.28.42
-profiles::website::nginx: true
 profiles::website::nginx::vhosts:
   www.gaggl.vagrant:
     server_name:

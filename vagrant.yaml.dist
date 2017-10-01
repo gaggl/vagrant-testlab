@@ -1,37 +1,59 @@
 ---
 nodes:
-    - name: monitoring
-      aliases: "kafka.gaggle.vagrant logs.gaggl.vagrant kibana.gaggl.vagrant metrics.gaggl.vagrant grafana.gaggl.vagrant alert.gaggl.vagrant dashboard.gaggl.vagrant"
-      cpus: 2
-      memory: 4096
-      hostname: node1.gaggl.vagrant
-      box: bento/centos-7.3
-      ip: 192.168.28.42
-      ports:
-        - guest: 22
-          host: 2842
-    - name: dc1
-      aliases: "dc1.gaggl.vagrant"
-      hostname: node2.gaggl.vagrant
-      box: bento/centos-7.3
-      ip: 192.168.28.43
-      ports:
-        - guest: 22
-          host: 2843
-    - name: dc2
-      aliases: "dc2.gaggl.vagrant"
-      hostname: node3.gaggl.vagrant
-      box: bento/centos-7.3
-      ip: 192.168.28.44
-      ports:
-        - guest: 22
-          host: 2844
-    - name: proxy
-      aliases: "proxy.gaggl.vagrant"
-      hostname: node4.gaggl.vagrant
-      box: bento/centos-7.3
-      ip: 192.168.28.49
-      ports:
-        - guest: 22
-          host: 2849
+  - name: puppet
+    aliases: "consul.gaggl.vagrant foreman.gaggl.vagrant puppet"
+    box: bento/centos-7.4
+    cpus: 2
+    memory: 4096
+    hostname: puppet.gaggl.vagrant
+    ip: 192.168.28.42
+    synced_folders:
+      - src: 'production/manifests/'
+        dst: '/etc/puppetlabs/code/environments/production/manifests'
+      - src: 'production/modules/'
+        dst: '/etc/puppetlabs/code/environments/production/modules'
+  - name: logs
+    aliases: "kibana.gaggl.vagrant elk.gaggl.vagrant"
+    box: bento/centos-7.4
+    hostname: logs.gaggl.vagrant
+    ip: 192.168.28.43
+    memory: 2048
+    provision_type: puppet_agent
+    puppetmaster: puppet.gaggl.vagrant
+  - name: metrics
+    aliases: "grafana.gaggl.vagrant prometheus.gaggl.vagrant"
+    box: bento/centos-7.4
+    hostname: metrics.gaggl.vagrant
+    ip: 192.168.28.44
+    provision_type: puppet_agent
+    puppetmaster: puppet.gaggl.vagrant
+  - name: alerts
+    aliases: "icinga.gaggl.vagrant"
+    box: bento/centos-7.4
+    hostname: alerts.gaggl.vagrant
+    ip: 192.168.28.45
+    provision_type: puppet_agent
+    puppetmaster: puppet.gaggl.vagrant
+  - name: dc1
+    aliases: "dc1.gaggl.vagrant"
+    box: bento/centos-7.4
+    hostname: node1.gaggl.vagrant
+    ip: 192.168.28.46
+    provision_type: puppet_agent
+    puppetmaster: puppet.gaggl.vagrant
+  - name: dc2
+    aliases: "dc2.gaggl.vagrant"
+    box: bento/centos-7.4
+    hostname: node2.gaggl.vagrant
+    ip: 192.168.28.47
+    provision_type: puppet_agent
+    puppetmaster: puppet.gaggl.vagrant
+  - name: proxy
+    aliases: "www.gaggl.vagrant"
+    box: bento/centos-7.4
+    hostname: proxy.gaggl.vagrant
+    ip: 192.168.28.48
+    provision_type: puppet_agent
+    puppetmaster: puppet.gaggl.vagrant
+puppet_version: 4.10.8
 virtualbox_group: '/Vagrant/gaggl.io'

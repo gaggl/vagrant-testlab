@@ -1,0 +1,59 @@
+---
+classes:
+  - roles::puppetmaster
+profiles::bootstrap::puppet::autosign: '/etc/puppetlabs/puppet/autosign.conf'
+profiles::bootstrap::puppet::autosign_domains:
+  - '*.vagrant'
+profiles::bootstrap::puppet::hiera_yaml_datadir: "/etc/puppetlabs/code/environments/production/hieradata"
+profiles::bootstrap::puppet::puppetmaster: puppet.gaggl.vagrant
+profiles::bootstrap::puppet::server: true
+profiles::bootstrap::puppet::server_external_nodes: ''
+profiles::bootstrap::puppet::server_foreman: true
+profiles::bootstrap::puppet::server_foreman_url: https://puppet.gaggl.vagrant
+profiles::bootstrap::puppet::server_puppetdb_host: puppet.gaggl.vagrant
+profiles::bootstrap::puppet::server_reports: 'store, foreman'
+profiles::bootstrap::puppet::server_storeconfigs_backend: 'puppetdb'
+profiles::cache::memcached: true
+profiles::cache::memcached::max_memory: 1024
+profiles::database::postgresql: true
+profiles::database::postgresql::databases:
+  foreman:
+    user: foreman
+    password: foreman
+    grant: all
+  puppetdb:
+    user: puppetdb
+    password: puppetdb
+    grant: all
+profiles::database::postgresql::manage_repo: true
+profiles::orchestration::consul::config:
+  bootstrap_expect: 1
+  client_addr: '0.0.0.0'
+  data_dir: /opt/consul
+  datacenter: mgmt
+  server: true
+profiles::orchestration::consul::options: '-bind=%{::ipaddress_enp0s8} -enable-script-checks -syslog -ui'
+profiles::puppet::foreman: true
+profiles::puppet::foreman::settings:
+  enc_environment:
+    value: false
+  modulepath:
+    value: '/etc/puppetlabs/code/modules'
+  puppet_server:
+    value: "puppet.gaggl.vagrant"
+  puppetdb_address:
+    value: "https://puppet.gaggl.vagrant:8081/v2/commands"
+  puppetdb_dashboard_address:
+    value: "http://puppet.gaggl.vagrant:8080/pdb/dashboard"
+  puppetdb_enabled:
+    value: true
+profiles::puppet::foreman_proxy: true
+profiles::puppet::foreman_proxy::custom_repo: true
+profiles::puppet::foreman_proxy::foreman_host: puppet.gaggl.vagrant
+profiles::puppet::foreman_proxy::puppetca: true
+profiles::puppet::foreman::plugins:
+  puppetdb:
+    package: 'tfm-rubygem-puppetdb_foreman'
+  memcache: {}
+profiles::puppet::puppetdb: true
+profiles::puppet::puppetmaster: true
