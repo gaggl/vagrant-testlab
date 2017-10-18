@@ -100,3 +100,15 @@
 [submodule "production/modules/logstash"]
 	path = production/modules/logstash
 	url = git@github.com:elastic/puppet-logstash.git
+[submodule "production/modules/dnsmasq"]
+	path = production/modules/dnsmasq
+	url = https://github.com/saz/puppet-dnsmasq.git
+[submodule "production/modules/fail2ban"]
+	path = production/modules/fail2ban
+	url = https://github.com/dhoppe/puppet-fail2ban.git
+[submodule "production/modules/resolv_conf"]
+	path = production/modules/resolv_conf
+	url = https://github.com/saz/puppet-resolv_conf.git
+[submodule "production/modules/puppet_authorization"]
+	path = production/modules/puppet_authorization
+	url = https://github.com/puppetlabs/puppetlabs-puppet_authorization.git

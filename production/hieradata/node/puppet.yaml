@@ -30,7 +30,7 @@ profiles::orchestration::consul::config:
   bootstrap_expect: 1
   client_addr: '0.0.0.0'
   data_dir: /opt/consul
-  datacenter: mgmt
+  datacenter: services
   server: true
 profiles::orchestration::consul::options: '-bind=%{::ipaddress_enp0s8} -enable-script-checks -syslog -ui'
 profiles::puppet::foreman: true

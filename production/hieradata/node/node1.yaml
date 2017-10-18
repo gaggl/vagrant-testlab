@@ -1,16 +1,10 @@
 ---
 classes:
   - roles::website
-profiles::orchestration::consul::config:
-  client_addr: '0.0.0.0'
-  data_dir: /opt/consul
-  datacenter: dc1
-  retry_join:
-    - 192.168.28.42
 profiles::website::nginx: true
 profiles::website::nginx::vhosts:
   www.gaggl.vagrant:
     server_name:
       - 'proxy.gaggl.vagrant'
       - 'www.gaggl.vagrant'
-    www_root: '/var/www'
+    www_root: '/usr/share/nginx/html'

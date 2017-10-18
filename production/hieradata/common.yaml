@@ -6,6 +6,17 @@ profiles::bootstrap::puppet::runinterval: 180
 profiles::bootstrap::puppet::splaylimit: 180s
 profiles::bootstrap::repos: true
 profiles::bootstrap::repositories::epel: true
+profiles::monitoring::icinga2: true
+profiles::monitoring::icinga2::ipaddress: '%{::ipaddress_enp0s8}'
+profiles::monitoring::icinga2::manage_repo: true
+profiles::monitoring::icinga2::parent_endpoints:
+  'alerts.gaggl.vagrant':
+    host: 192.168.28.45
+profiles::monitoring::icinga2::vars:
+  disks:
+    'disk /':
+      disk_wfree: 10%
+      disk_cfree: 5%
 profiles::monitoring::logstash: true
 profiles::monitoring::logstash::config_files:
   input:
@@ -21,5 +32,15 @@ profiles::orchestration::consul::config:
   datacenter: services
   retry_join:
     - 192.168.28.42
+profiles::orchestration::consul::services:
+  node_exporter:
+    address: "%{::fqdn}"
+    checks:
+      - http: http://localhost:9100
+        interval: 10s
+    port: 9100
+    tags:
+      - "hostname=%{::trusted.hostname}"
+      - "environment=%{::environment}"
 profiles::orchestration::consul::options: '-bind=%{::ipaddress_enp0s8} -enable-script-checks -syslog'
 profiles::runtime::java: true
