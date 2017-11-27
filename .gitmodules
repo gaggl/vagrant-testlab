@@ -112,3 +112,6 @@
 [submodule "production/modules/puppet_authorization"]
 	path = production/modules/puppet_authorization
 	url = https://github.com/puppetlabs/puppetlabs-puppet_authorization.git
+[submodule "production/modules/sudo"]
+	path = production/modules/sudo
+	url = git@github.com:saz/puppet-sudo.git
