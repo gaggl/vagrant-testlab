@@ -8,10 +8,8 @@ nodes:
     hostname: puppet.gaggl.vagrant
     ip: 192.168.28.42
     synced_folders:
-      - src: 'production/manifests/'
-        dst: '/etc/puppetlabs/code/environments/production/manifests'
-      - src: 'production/modules/'
-        dst: '/etc/puppetlabs/code/environments/production/modules'
+      - src: 'production'
+        dst: '/etc/puppetlabs/code/environments/production'
   - name: logs
     aliases: "kibana.gaggl.vagrant elk.gaggl.vagrant"
     box: bento/centos-7.4
@@ -55,5 +53,4 @@ nodes:
     ip: 192.168.28.48
     provision_type: puppet_agent
     puppetmaster: puppet.gaggl.vagrant
-puppet_version: 4.10.8
 virtualbox_group: '/Vagrant/gaggl.io'
