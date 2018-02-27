@@ -13,8 +13,9 @@ profiles::bootstrap::puppet::server_foreman_url: https://puppet.gaggl.vagrant
 profiles::bootstrap::puppet::server_puppetdb_host: puppet.gaggl.vagrant
 profiles::bootstrap::puppet::server_reports: 'store, foreman'
 profiles::bootstrap::puppet::server_storeconfigs_backend: 'puppetdb'
-profiles::cache::memcached: true
-profiles::cache::memcached::max_memory: 1024
+# The parameters should only be set when the foreman node has been setup
+#profiles::cache::memcached: true
+#profiles::cache::memcached::max_memory: 1024
 profiles::database::postgresql: true
 profiles::database::postgresql::databases:
   foreman:
@@ -54,6 +55,7 @@ profiles::puppet::foreman_proxy::puppetca: true
 profiles::puppet::foreman::plugins:
   puppetdb:
     package: 'tfm-rubygem-puppetdb_foreman'
-  memcache: {}
+# The parameters should only be set when the foreman node has been setup
+#  memcache: {}
 profiles::puppet::puppetdb: true
 profiles::puppet::puppetmaster: true
