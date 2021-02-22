@@ -1,0 +1,66 @@
+---
+profiles::bootstrap::firewall: true
+profiles::bootstrap::puppet: true
+profiles::bootstrap::puppet::runinterval: 180
+profiles::bootstrap::puppet::puppetmaster: puppet.gaggl.vagrant
+profiles::bootstrap::puppet::splaylimit: 180s
+profiles::bootstrap::repos: true
+profiles::bootstrap::repositories::epel: true
+profiles::bootstrap::repositories::hashicorp: true
+profiles::database::postgresql::manage_package_repo: true
+profiles::orchestration::consul: true
+profiles::orchestration::consul::config:
+  client_addr: '0.0.0.0'
+  retry_join:
+    - consul.gaggl.vagrant
+profiles::orchestration::consul::config_defaults:
+  advertise_addr: '%{::ipaddress_eth1}'
+  data_dir: /opt/consul
+  datacenter: services
+  connect:
+    enabled: true
+  enable_central_service_config: true
+  telemetry:
+    prometheus_retention_time: "30s"
+    disable_hostname: true
+profiles::orchestration::consul::connect: true
+profiles::orchestration::consul::install_method: package
+profiles::orchestration::consul::searchpath:
+  - 'node.consul'
+  - 'gaggl.vagrant'
+profiles::orchestration::consul::name_servers:
+  - 127.0.0.1
+  - 10.0.2.3
+profiles::orchestration::consul::options: '-bind=%{::ipaddress_eth1} -enable-script-checks -syslog'
+profiles::orchestration::consul::resolv: true
+profiles::orchestration::consul::sd_service_endpoint: 'http://%{::ipaddress_eth1}:8500'
+profiles::scheduling::nomad::config:
+  client:
+    enabled: true
+    node_class: 'vagrant'
+    options:
+      "driver.whitelist": 'docker'
+    network_interface: eth1
+profiles::scheduling::nomad::config_defaults:
+  advertise:
+    http: '%{::ipaddress_eth1}:4646'
+    rpc: '%{::ipaddress_eth1}:4647'
+    serf: '%{::ipaddress_eth1}:4648'
+  consul:
+    address: '127.0.0.1:8500'
+  data_dir: /var/lib/nomad
+  datacenter: services
+  telemetry:
+    collection_interval: '1s'
+    disable_hostname: true
+    prometheus_metrics: true
+    publish_allocation_metrics: true
+    publish_node_metrics: true
+  vault:
+    enabled: true
+    address: 'http://active.vault.service.consul:8200'
+    tls_skip_verify: true
+profiles::scheduling::nomad::install_method: package
+profiles::scheduling::nomad::sd_service_endpoint: 'http://%{::ipaddress_eth1}:4646'
+profiles::security::vault::install_method: repo
+profiles::security::vault::sd_service_endpoint: 'http://%{::ipaddress_eth1}:8200'

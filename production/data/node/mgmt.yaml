@@ -1,0 +1,50 @@
+---
+classes:
+  - roles::scheduler
+  - roles::website
+profiles::runtime::docker: true
+profiles::scheduling::nomad: true
+profiles::scheduling::nomad::config:
+  client:
+    meta:
+      project: mgmt
+  server:
+    enabled: true
+    bootstrap_expect: 1
+  vault:
+    create_from_role: nomad-cluster
+    token: 'CHANGEME'
+profiles::scheduling::nomad::consul_connect: true
+profiles::scheduling::nomad::manage_sd_service: false
+profiles::website::traefik2: true
+profiles::website::traefik2::static_config:
+  accessLog:
+    filePath: "/var/log/traefik2/access.log"
+  api:
+    dashboard: true
+    insecure: true
+  entryPoints:
+    http:
+      address: ':80'
+  log:
+    filePath: "/var/log/traefik2/traefik.log"
+  metrics:
+    prometheus:
+      addEntryPointsLabels: true
+      addServicesLabels: true
+  ping: {}
+  providers:
+    consulCatalog:
+      defaultRule: "Host(`{{ .Name }}.gaggl.vagrant`)"
+      endpoint:
+        address: '127.0.0.1:8500'
+      exposedByDefault: false
+    file:
+      filename: "/etc/traefik2/dynamic.yaml"
+      watch: true
+  tracing:
+    zipkin:
+      httpEndpoint: http://tempo.service.consul:9411/api/v2/spans
+profiles::website::traefik2::expose_ui: true
+profiles::website::traefik2::protocol: 'http'
+...

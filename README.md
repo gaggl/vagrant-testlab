@@ -18,16 +18,14 @@ A vagrant setup that create a puppetmaster, consul, ELK, Prometheus, Icinga setu
 
 ## (G)UI interfaces
 
-    consul     => http://consul.gaggl.vagrant:8500
-    foreman    => https://puppet.gaggl.vagrant
-        username: admin
-        passwd  : secret
-    grafana    => grafana.gaggl.vagrant
-        username: admin
-        passwd  : secret
-    icinga     => icinga.gaggl.vagrant
-        username: icinga
-        passwd  : icinga
-    kibana     => kibana.gaggl.vagrant
-    puppetdb   => http://puppet.gaggl.vagrant:8080
-    prometheus => prometheus.gaggl.vagrant:9100
+    consul   => http://consul.gaggl.vagrant:8500
+    foreman  => https://foreman.gaggl.vagrant admin:secret
+    nomad    => http://nomad.gaggl.vagrant:4646
+    traefik  => http://traefik.gaggl.vagrant:8080
+    vault    => http://vault.gaggl.vagrant:8200
+
+    alertmanager => alerts.gaggl.vagrant
+    grafana      => grafana.gaggl.vagrant admin:secret
+    loki         => logs.gaggl.vagrant
+    prometheus   => metrics.gaggl.vagrant
+    tempo        => tracing.gaggl.vagrant

@@ -10,21 +10,6 @@
 [submodule "modules/firewall"]
 	path = production/modules/firewall
 	url = git@github.com:puppetlabs/puppetlabs-firewall.git
-[submodule "production/modules/yum"]
-	path = production/modules/yum
-	url = https://github.com/voxpupuli/puppet-yum.git
-[submodule "production/modules/file_concat"]
-	path = production/modules/file_concat
-	url = https://github.com/electrical/puppet-lib-file_concat.git
-[submodule "production/modules/grafana"]
-	path = production/modules/grafana
-	url = https://github.com/bfraser/puppet-grafana.git
-[submodule "production/modules/nginx"]
-	path = production/modules/nginx
-	url = https://github.com/voxpupuli/puppet-nginx.git
-[submodule "production/modules/datacat"]
-	path = production/modules/datacat
-	url = https://github.com/richardc/puppet-datacat.git
 [submodule "production/modules/concat"]
 	path = production/modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat.git
@@ -40,9 +25,6 @@
 [submodule "production/modules/puppetdb"]
 	path = production/modules/puppetdb
 	url = git@github.com:puppetlabs/puppetlabs-puppetdb.git
-[submodule "production/modules/hocon"]
-	path = production/modules/hocon
-	url = https://github.com/puppetlabs/puppetlabs-hocon.git
 [submodule "production/modules/consul"]
 	path = production/modules/consul
 	url = https://github.com/solarkennedy/puppet-consul.git
@@ -55,63 +37,57 @@
 [submodule "production/modules/foreman_proxy"]
 	path = production/modules/foreman_proxy
 	url = git@github.com:theforeman/puppet-foreman_proxy.git
-[submodule "production/modules/prometheus"]
-	path = production/modules/prometheus
-	url = git@github.com:voxpupuli/puppet-prometheus.git
-[submodule "production/modules/mailhog"]
-	path = production/modules/mailhog
-	url = git@github.com:attachmentgenie/attachmentgenie-mailhog.git
-[submodule "production/modules/wget"]
-	path = production/modules/wget
-	url = https://github.com/maestrodev/puppet-wget.git
-[submodule "production/modules/epel"]
-	path = production/modules/epel
-	url = git@github.com:stahnma/puppet-module-epel.git
 [submodule "production/modules/memcached"]
 	path = production/modules/memcached
 	url = git@github.com:saz/puppet-memcached.git
-[submodule "production/modules/extlib"]
-	path = production/modules/extlib
-	url = git@github.com:voxpupuli/puppet-extlib.git
-[submodule "puppetlabs-inifile"]
-	path = production/modules/inifile
-	url = git@github.com:puppetlabs/puppetlabs-inifile.git
 [submodule "production/modules/apache"]
 	path = production/modules/apache
 	url = git@github.com:puppetlabs/puppetlabs-apache.git
-[submodule "production/modules/icinga2"]
-	path = production/modules/icinga2
-	url = git@github.com:Icinga/puppet-icinga2-rewrite.git
-[submodule "production/modules/icingaweb2"]
-	path = production/modules/icingaweb2
-	url = git@github.com:Icinga/puppet-icingaweb2.git
-[submodule "production/modules/php"]
-	path = production/modules/php
-	url = https://github.com/voxpupuli/puppet-php.git
-[submodule "production/modules/elasticsearch"]
-	path = production/modules/elasticsearch
-	url = git@github.com:elastic/puppet-elasticsearch.git
-[submodule "production/modules/java"]
-	path = production/modules/java
-	url = git@github.com:puppetlabs/puppetlabs-java.git
-[submodule "production/modules/kibana"]
-	path = production/modules/kibana
-	url = git@github.com:elastic/puppet-kibana.git
-[submodule "production/modules/logstash"]
-	path = production/modules/logstash
-	url = git@github.com:elastic/puppet-logstash.git
 [submodule "production/modules/dnsmasq"]
 	path = production/modules/dnsmasq
 	url = https://github.com/saz/puppet-dnsmasq.git
-[submodule "production/modules/fail2ban"]
-	path = production/modules/fail2ban
-	url = https://github.com/dhoppe/puppet-fail2ban.git
 [submodule "production/modules/resolv_conf"]
 	path = production/modules/resolv_conf
 	url = https://github.com/saz/puppet-resolv_conf.git
 [submodule "production/modules/puppet_authorization"]
 	path = production/modules/puppet_authorization
 	url = https://github.com/puppetlabs/puppetlabs-puppet_authorization.git
-[submodule "production/modules/sudo"]
-	path = production/modules/sudo
-	url = git@github.com:saz/puppet-sudo.git
+[submodule "production/modules/redis"]
+	path = production/modules/redis
+	url = https://github.com/voxpupuli/puppet-redis.git
+[submodule "production/modules/inifile"]
+	path = production/modules/inifile
+	url = https://github.com/puppetlabs/puppetlabs-inifile.git
+[submodule "production/modules/extlib"]
+	path = production/modules/extlib
+	url = https://github.com/voxpupuli/puppet-extlib.git
+[submodule "production/modules/datacat"]
+	path = production/modules/datacat
+	url = https://github.com/richardc/puppet-datacat.git
+[submodule "production/modules/epel"]
+	path = production/modules/epel
+	url = https://github.com/voxpupuli/puppet-epel.git
+[submodule "production/modules/hashi_stack"]
+	path = production/modules/hashi_stack
+	url = https://github.com/voxpupuli/puppet-hashi_stack.git
+[submodule "production/modules/vault"]
+	path = production/modules/vault
+	url = https://github.com/jsok/puppet-vault.git
+[submodule "production/modules/file_capability"]
+	path = production/modules/file_capability
+	url = https://github.com/smoeding/puppet-file_capability.git
+[submodule "production/modules/nomad"]
+	path = production/modules/nomad
+	url = https://github.com/voxpupuli/puppet-nomad.git
+[submodule "production/modules/traefik2"]
+	path = production/modules/traefik2
+	url = git@github.com:attachmentgenie/attachmentgenie-traefik2.git
+[submodule "production/modules/docker"]
+	path = production/modules/docker
+	url = https://github.com/puppetlabs/puppetlabs-docker.git
+[submodule "production/modules/augeasproviders_sysctl"]
+	path = production/modules/augeasproviders_sysctl
+	url = https://github.com/hercules-team/augeasproviders_sysctl.git
+[submodule "production/modules/augeasproviders_core"]
+	path = production/modules/augeasproviders_core
+	url = https://github.com/hercules-team/augeasproviders_core.git
