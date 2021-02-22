@@ -16,6 +16,11 @@ A vagrant setup that create a puppetmaster, consul, ELK, Prometheus, Icinga setu
 ## Setup
     vagrant up
 
+## Inspec tests
+
+    bundle exec rake
+    bundle exec rake inspec[puppet] 
+
 ## (G)UI interfaces
 
     consul   => http://consul.gaggl.vagrant:8500
