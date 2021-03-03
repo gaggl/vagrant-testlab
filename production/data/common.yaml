@@ -1,13 +1,9 @@
 ---
+classes:
+  - roles::scheduler
 profiles::bootstrap::firewall: true
-profiles::bootstrap::puppet: true
-profiles::bootstrap::puppet::runinterval: 180
-profiles::bootstrap::puppet::puppetmaster: puppet.gaggl.vagrant
-profiles::bootstrap::puppet::splaylimit: 180s
 profiles::bootstrap::repos: true
-profiles::bootstrap::repositories::epel: true
 profiles::bootstrap::repositories::hashicorp: true
-profiles::database::postgresql::manage_package_repo: true
 profiles::orchestration::consul: true
 profiles::orchestration::consul::config:
   client_addr: '0.0.0.0'
@@ -25,19 +21,13 @@ profiles::orchestration::consul::config_defaults:
     disable_hostname: true
 profiles::orchestration::consul::connect: true
 profiles::orchestration::consul::install_method: package
-profiles::orchestration::consul::searchpath:
-  - 'node.consul'
-  - 'gaggl.vagrant'
-profiles::orchestration::consul::name_servers:
-  - 127.0.0.1
-  - 10.0.2.3
 profiles::orchestration::consul::options: '-bind=%{::ipaddress_eth1} -enable-script-checks -syslog'
-profiles::orchestration::consul::resolv: true
 profiles::orchestration::consul::sd_service_endpoint: 'http://%{::ipaddress_eth1}:8500'
+profiles::runtime::docker: true
+profiles::scheduling::nomad: true
 profiles::scheduling::nomad::config:
   client:
     enabled: true
-    node_class: 'vagrant'
     options:
       "driver.whitelist": 'docker'
     network_interface: eth1
@@ -49,7 +39,6 @@ profiles::scheduling::nomad::config_defaults:
   consul:
     address: '127.0.0.1:8500'
   data_dir: /var/lib/nomad
-  datacenter: services
   telemetry:
     collection_interval: '1s'
     disable_hostname: true
@@ -60,6 +49,7 @@ profiles::scheduling::nomad::config_defaults:
     enabled: true
     address: 'http://active.vault.service.consul:8200'
     tls_skip_verify: true
+profiles::scheduling::nomad::consul_connect: true
 profiles::scheduling::nomad::install_method: package
 profiles::scheduling::nomad::sd_service_endpoint: 'http://%{::ipaddress_eth1}:4646'
 profiles::security::vault::install_method: repo

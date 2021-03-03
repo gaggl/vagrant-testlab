@@ -3,34 +3,27 @@ required_plugins:
     - vagrant-hostmanager
     - vagrant-puppet-install
 nodes:
-  - name: puppet
-    aliases: "consul.gaggl.vagrant foreman.gaggl.vagrant vault.gaggl.vagrant puppet"
+  - name: mgmt
+    aliases: "alerts.grafana.vagrant consul.gaggl.vagrant grafana.gaggl.vagrant logs.gaggl.vagrant nomad.gaggl.vagrant metrics.gaggl.vagrant tracing.gaggl.vagrant vault.gaggl.vagrant"
     box: bento/centos-7.9
-    cpus: 2
-    memory: 4096
-    hostname: puppet.gaggl.vagrant
+    hostname: mgmt.gaggl.vagrant
     ip: 192.168.28.42
     synced_folders:
       - src: 'production'
         dst: '/etc/puppetlabs/code/environments/production'
-  - name: mgmt
-    aliases: "alerts.grafana.vagrant grafana.gaggl.vagrant logs.gaggl.vagrant nomad.gaggl.vagrant metrics.gaggl.vagrant tracing.gaggl.vagrant traefik.gaggl.vagrant"
-    box: bento/centos-7.9
-    hostname: mgmt.gaggl.vagrant
-    ip: 192.168.28.52
-    provision_type: puppet_agent
-    puppetmaster: puppet.gaggl.vagrant
   - name: dc1
     box: bento/centos-7.9
     hostname: dc1.gaggl.vagrant
-    ip: 192.168.28.62
-    provision_type: puppet_agent
-    puppetmaster: puppet.gaggl.vagrant
+    ip: 192.168.28.50
+    synced_folders:
+      - src: 'production'
+        dst: '/etc/puppetlabs/code/environments/production'
   - name: dc2
     box: bento/centos-7.9
     hostname: dc2.gaggl.vagrant
-    ip: 192.168.28.63
-    provision_type: puppet_agent
-    puppetmaster: puppet.gaggl.vagrant
+    ip: 192.168.28.60
+    synced_folders:
+      - src: 'production'
+        dst: '/etc/puppetlabs/code/environments/production'
 puppet_version: 6.21.1
 virtualbox_group: '/gaggl.io'

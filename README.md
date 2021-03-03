@@ -1,6 +1,6 @@
 #  vagrant-testlab
 
-A vagrant setup that create a puppetmaster, consul, ELK, Prometheus, Icinga setup 
+A vagrant setup that create a working nomad cluster and observability stack.
 
 ## Requirements
     Virtualbox                  => https://www.virtualbox.org
@@ -19,14 +19,12 @@ A vagrant setup that create a puppetmaster, consul, ELK, Prometheus, Icinga setu
 ## Inspec tests
 
     bundle exec rake
-    bundle exec rake inspec[puppet] 
+    bundle exec rake inspec[mgmt] 
 
 ## (G)UI interfaces
 
     consul   => http://consul.gaggl.vagrant:8500
-    foreman  => https://foreman.gaggl.vagrant admin:secret
     nomad    => http://nomad.gaggl.vagrant:4646
-    traefik  => http://traefik.gaggl.vagrant:8080
     vault    => http://vault.gaggl.vagrant:8200
 
     alertmanager => alerts.gaggl.vagrant

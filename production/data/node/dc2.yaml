@@ -1,8 +1,7 @@
 ---
-classes:
-  - roles::scheduler
-profiles::runtime::docker: true
-profiles::scheduling::nomad: true
-profiles::scheduling::nomad::consul_connect: true
-profiles::scheduling::nomad::manage_sd_service: false
+profiles::scheduling::nomad::config:
+  client:
+    meta:
+      project: dc2
+  datacenter: dc2
 ...

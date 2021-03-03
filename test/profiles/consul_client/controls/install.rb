@@ -55,7 +55,7 @@ end
 control 'directories-2.0' do
   impact 1.0
   title 'Consul var directory is created'
-  describe file('/var/lib/consul') do
+  describe file('/opt/consul') do
     it { should exist }
     it { should be_directory }
   end

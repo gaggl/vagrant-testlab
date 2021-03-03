@@ -9,13 +9,15 @@ version: 0.1.0
 depends:
   - name: consul_client
     path: ../profiles/consul_client
+  - name: consul_server
+    path: ../profiles/consul_server
   - name: docker
     path: ../profiles/docker
   - name: nomad_client
     path: ../profiles/nomad_client
   - name: nomad_server
     path: ../profiles/nomad_server
-  - name: traefik
-    path: ../profiles/traefik
+  - name: vault
+    path: ../profiles/vault
 supports:
   platform: os
