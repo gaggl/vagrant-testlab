@@ -9,14 +9,14 @@ control 'ports-1.0' do
   end
 end
 
-# control 'ports-2.0' do
-#   impact 1.0
-#   title 'Port 8201 should be in use by vault'
-#   describe port(8201) do
-#     it { should be_listening }
-#     its('processes') {should include 'vault'}
-#   end
-# end
+control 'ports-2.0' do
+  impact 1.0
+  title 'Port 8201 should be in use by vault'
+  describe port(8201) do
+    it { should be_listening }
+    its('processes') {should include 'vault'}
+  end
+end
 
 control 'directories-1.0' do
   impact 1.0
