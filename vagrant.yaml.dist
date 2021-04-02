@@ -4,10 +4,11 @@ required_plugins:
     - vagrant-puppet-install
 nodes:
   - name: mgmt
-    aliases: "alerts.grafana.vagrant consul.gaggl.vagrant grafana.gaggl.vagrant logs.gaggl.vagrant nomad.gaggl.vagrant metrics.gaggl.vagrant tracing.gaggl.vagrant vault.gaggl.vagrant"
+    aliases: "alerts.gaggl.vagrant consul.gaggl.vagrant gamemaster.gaggl.vagrant grafana.gaggl.vagrant ingress.gaggl.vagrant logs.gaggl.vagrant mail.gaggl.vagrant metrics.gaggl.vagrant nomad.gaggl.vagrant traces.gaggl.vagrant vault.gaggl.vagrant webapp.gaggl.vagrant"
     box: bento/centos-7.9
     hostname: mgmt.gaggl.vagrant
-    ip: 192.168.28.42
+    ip: 192.168.28.40
+    memory: 2560
     synced_folders:
       - src: 'production'
         dst: '/etc/puppetlabs/code/environments/production'

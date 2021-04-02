@@ -43,3 +43,12 @@
 [submodule "production/modules/augeasproviders_core"]
 	path = production/modules/augeasproviders_core
 	url = https://github.com/hercules-team/augeasproviders_core.git
+[submodule "production/modules/prometheus"]
+	path = production/modules/prometheus
+	url = https://github.com/voxpupuli/puppet-prometheus.git
+[submodule "fixtures/nomad"]
+	path = fixtures/nomad
+	url = git@github.com:gaggl/nomad-jobs.git
+[submodule "fixtures/grafana"]
+	path = fixtures/grafana
+	url = git@github.com:gaggl/grafana-dashboards.git

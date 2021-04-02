@@ -1,4 +1,17 @@
 ---
+profiles::bootstrap::firewall::entries:
+  '200 allow http':
+    port: 80
+  '200 allow logs':
+    port: 3100
+  '200 allow smtp':
+    port: 1025
+  '200 allow syslog':
+    port: 1514
+  '200 allow traces':
+    port: 9411
+  '200 allow traefik-ui':
+    port: 8080
 profiles::orchestration::consul::config:
   addresses: {
     http: '127.0.0.1 %{::ipaddress_eth1}'
@@ -11,6 +24,9 @@ profiles::orchestration::consul::config:
     metrics_proxy:
       base_url: "http://%{::ipaddress_eth1}:9090/"
 profiles::orchestration::consul::manage_sd_service: true
+profiles::orchestration::consul::sd_service_tags:
+  - 'traefik.enable=true'
+  - 'traefik.http.routers.consul.rule=Host(`consul.gaggl.vagrant`)'
 profiles::orchestration::consul::ui: true
 profiles::scheduling::nomad::config:
   client:
@@ -24,6 +40,9 @@ profiles::scheduling::nomad::config:
     create_from_role: nomad-cluster
     token: 's.CHANGEME'
 profiles::scheduling::nomad::manage_sd_service: true
+profiles::scheduling::nomad::sd_service_tags:
+  - 'traefik.enable=true'
+  - 'traefik.http.routers.nomad.rule=Host(`nomad.gaggl.vagrant`)'
 profiles::security::vault: true
 profiles::security::vault::extra_config:
   api_addr: 'https://%{::ipaddress_eth1}:8200'
@@ -34,6 +53,9 @@ profiles::security::vault::listener:
     cluster_address: '%{::ipaddress_eth1}:8201'
     tls_disable: 1
 profiles::security::vault::manage_sd_service: true
+profiles::security::vault::sd_service_tags:
+  - 'traefik.enable=true'
+  - 'traefik.http.routers.vault.rule=Host(`vault.gaggl.vagrant`)'
 profiles::security::vault::storage:
   consul:
     address: '127.0.0.1:8500'

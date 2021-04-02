@@ -2,8 +2,11 @@
 classes:
   - roles::scheduler
 profiles::bootstrap::firewall: true
+profiles::bootstrap::firewall::purge: false
 profiles::bootstrap::repos: true
 profiles::bootstrap::repositories::hashicorp: true
+profiles::monitoring::prometheus: true
+profiles::monitoring::prometheus::manage_sd_service: true
 profiles::orchestration::consul: true
 profiles::orchestration::consul::config:
   client_addr: '0.0.0.0'

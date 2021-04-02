@@ -15,6 +15,7 @@ A vagrant setup that create a working nomad cluster and observability stack.
     
 ## Setup
     vagrant up
+    cd terraform; terraform apply -auto-approve
 
 ## Inspec tests
 
@@ -23,12 +24,17 @@ A vagrant setup that create a working nomad cluster and observability stack.
 
 ## (G)UI interfaces
 
-    consul   => http://consul.gaggl.vagrant:8500
-    nomad    => http://nomad.gaggl.vagrant:4646
-    vault    => http://vault.gaggl.vagrant:8200
+    consul       => consul.gaggl.vagrant consul.gaggl.vagrant:8500
+    nomad        => nomad.gaggl.vagrant nomad.gaggl.vagrant:4646
+    vault        => vault.gaggl.vagrant vault.gaggl.vagrant:8200
 
     alertmanager => alerts.gaggl.vagrant
     grafana      => grafana.gaggl.vagrant admin:secret
-    loki         => logs.gaggl.vagrant
+    loki         => logs.gaggl.vagrant logs.gaggl.vagrant:3100
+    mailhog      => mail.gaggl.vagrant
     prometheus   => metrics.gaggl.vagrant
-    tempo        => tracing.gaggl.vagrant
+    tempo        => traces.gaggl.vagrant
+    traefik      => ingress.gaggl.vagrant ingress.gaggl.vagrant:8080
+    
+    gaggl        => gamemaster.gaggl.vagrant
+    platform     => webapp.gaggl.vagrant
