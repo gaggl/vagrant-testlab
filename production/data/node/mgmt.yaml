@@ -43,6 +43,7 @@ profiles::scheduling::nomad::manage_sd_service: true
 profiles::scheduling::nomad::sd_service_tags:
   - 'traefik.enable=true'
   - 'traefik.http.routers.nomad.rule=Host(`nomad.gaggl.vagrant`)'
+profiles::orchestration::consul::server: true
 profiles::security::vault: true
 profiles::security::vault::extra_config:
   api_addr: 'https://%{::ipaddress_eth1}:8200'
