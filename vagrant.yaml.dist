@@ -4,7 +4,7 @@ required_plugins:
     - vagrant-puppet-install
 nodes:
   - name: mgmt
-    aliases: "alerts.gaggl.vagrant consul.gaggl.vagrant gamemaster.gaggl.vagrant grafana.gaggl.vagrant ingress.gaggl.vagrant logs.gaggl.vagrant mail.gaggl.vagrant metrics.gaggl.vagrant nomad.gaggl.vagrant traces.gaggl.vagrant vault.gaggl.vagrant webapp.gaggl.vagrant"
+    aliases: "alerts.gaggl.vagrant consul.gaggl.vagrant gamemaster.gaggl.vagrant grafana.gaggl.vagrant ingress.gaggl.vagrant logs.gaggl.vagrant mail.gaggl.vagrant metrics.gaggl.vagrant nomad.gaggl.vagrant status.gaggl.vagrant traces.gaggl.vagrant vault.gaggl.vagrant webapp.gaggl.vagrant"
     box: bento/centos-7.9
     hostname: mgmt.gaggl.vagrant
     ip: 192.168.28.40
@@ -12,6 +12,15 @@ nodes:
     synced_folders:
       - src: 'production'
         dst: '/etc/puppetlabs/code/environments/production'
+    provision_shell: |
+        export VAULT_ADDR=http://192.168.28.40:8200
+        /usr/bin/vault operator init -key-shares=1 -key-threshold=1 | tee vault.keys
+        VAULT_TOKEN=$(grep '^Initial' vault.keys | awk '{print $4}')
+        VAULT_KEY=$(grep '^Unseal Key 1:' vault.keys | awk '{print $4}')
+        export VAULT_TOKEN
+        /usr/bin/vault operator unseal "$VAULT_KEY"
+        echo $VAULT_TOKEN > /etc/vault_token.txt
+        echo $VAULT_KEY > /etc/vault_key.txt
   - name: dc1
     box: bento/centos-7.9
     hostname: dc1.gaggl.vagrant

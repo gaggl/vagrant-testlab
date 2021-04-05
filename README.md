@@ -30,10 +30,9 @@ A vagrant setup that create a working nomad cluster and observability stack.
 
     alertmanager => alerts.gaggl.vagrant
     grafana      => grafana.gaggl.vagrant admin:secret
-    loki         => logs.gaggl.vagrant logs.gaggl.vagrant:3100
     mailhog      => mail.gaggl.vagrant
     prometheus   => metrics.gaggl.vagrant
-    tempo        => traces.gaggl.vagrant
+    statping     => status.gaggl.vagrant admin:secret
     traefik      => ingress.gaggl.vagrant ingress.gaggl.vagrant:8080
     
     gaggl        => gamemaster.gaggl.vagrant
