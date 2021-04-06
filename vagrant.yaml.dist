@@ -9,31 +9,40 @@ nodes:
     hostname: mgmt.gaggl.vagrant
     ip: 192.168.28.40
     memory: 2560
-    synced_folders:
-      - src: 'production'
-        dst: '/etc/puppetlabs/code/environments/production'
     provision_shell: |
-        export VAULT_ADDR=http://192.168.28.40:8200
+      export VAULT_ADDR=http://$(hostname --all-ip-addresses | awk '{print $2}'):8200
+      function initialize_vault {
         /usr/bin/vault operator init -key-shares=1 -key-threshold=1 | tee vault.keys
         VAULT_TOKEN=$(grep '^Initial' vault.keys | awk '{print $4}')
         VAULT_KEY=$(grep '^Unseal Key 1:' vault.keys | awk '{print $4}')
-        export VAULT_TOKEN
-        /usr/bin/vault operator unseal "$VAULT_KEY"
         echo $VAULT_TOKEN > /etc/vault_token.txt
         echo $VAULT_KEY > /etc/vault_key.txt
+      }
+      function unseal_vault {
+        VAULT_KEY=$(cat /etc/vault_key.txt)
+        /usr/bin/vault operator unseal "$VAULT_KEY"
+      }
+      VAULT_INITILIAZED=$(vault status | grep '^Initialized' | awk '{print $2}')
+      if [ "$VAULT_INITILIAZED" = "true" ]
+      then
+        echo "vault is already initialized....moving on"
+      else
+        initialize_vault
+      fi
+      VAULT_SEALED=$(vault status | grep '^Sealed' | awk '{print $2}')
+      if [ "$VAULT_SEALED" = "true" ]
+      then
+        unseal_vault
+      else
+        echo "vault is already unsealed....moving on"
+      fi
   - name: dc1
     box: bento/centos-7.9
     hostname: dc1.gaggl.vagrant
     ip: 192.168.28.50
-    synced_folders:
-      - src: 'production'
-        dst: '/etc/puppetlabs/code/environments/production'
   - name: dc2
     box: bento/centos-7.9
     hostname: dc2.gaggl.vagrant
     ip: 192.168.28.60
-    synced_folders:
-      - src: 'production'
-        dst: '/etc/puppetlabs/code/environments/production'
 puppet_version: 6.21.1
 virtualbox_group: '/gaggl.io'
