@@ -53,7 +53,8 @@ profiles::scheduling::nomad::config_defaults:
     address: 'http://active.vault.service.consul:8200'
     tls_skip_verify: true
 profiles::scheduling::nomad::consul_connect: true
-profiles::scheduling::nomad::install_method: package
+profiles::scheduling::nomad::install_method: url
+profiles::scheduling::nomad::manage_service_file: true
 profiles::scheduling::nomad::sd_service_endpoint: 'http://%{::ipaddress_eth1}:4646'
 profiles::security::vault::install_method: repo
 profiles::security::vault::sd_service_endpoint: 'http://%{::ipaddress_eth1}:8200'

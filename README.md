@@ -15,7 +15,7 @@ A vagrant setup that create a working nomad cluster and observability stack.
     
 ## Setup
     vagrant up
-    (cd terraform; terraform apply -auto-approve)
+    (cd terraform; terraform init; terraform apply -auto-approve)
 
 ## Inspec tests
 
