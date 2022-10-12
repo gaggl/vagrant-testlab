@@ -1,4 +1,7 @@
 ---
+classes:
+  - roles::scheduler
+  - profiles::dns
 profiles::bootstrap::firewall::entries:
   '200 allow http':
     port: 80
@@ -12,6 +15,8 @@ profiles::bootstrap::firewall::entries:
     port: 9411
   '200 allow traefik-ui':
     port: 8080
+profiles::dns::bind: true
+profiles::dns::bind::forward_consul: true
 profiles::orchestration::consul::config:
   addresses: {
     http: '127.0.0.1 %{::ipaddress_eth1}'
@@ -31,14 +36,19 @@ profiles::orchestration::consul::ui: true
 profiles::scheduling::nomad::config:
   client:
     meta:
-      project: mgmt
-  datacenter: mgmt
+      project: lab
+    host_volume:
+      minio:
+        path: "/opt/nomad"
+  datacenter: lab
   server:
     enabled: true
     bootstrap_expect: 1
   vault:
     create_from_role: nomad-cluster
     token: 's.CHANGEME'
+profiles::scheduling::nomad::device: '/dev/sdb'
+profiles::scheduling::nomad::manage_disk: true
 profiles::scheduling::nomad::manage_sd_service: true
 profiles::scheduling::nomad::sd_service_tags:
   - 'traefik.enable=true'

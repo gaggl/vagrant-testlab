@@ -4,11 +4,15 @@ required_plugins:
     - vagrant-puppet-install
 nodes:
   - name: mgmt
-    aliases: "alerts.gaggl.vagrant consul.gaggl.vagrant gamemaster.gaggl.vagrant grafana.gaggl.vagrant ingress.gaggl.vagrant logs.gaggl.vagrant mail.gaggl.vagrant metrics.gaggl.vagrant nomad.gaggl.vagrant status.gaggl.vagrant traces.gaggl.vagrant vault.gaggl.vagrant webapp.gaggl.vagrant"
+    aliases: "alerts.gaggl.vagrant consul.gaggl.vagrant gamemaster.gaggl.vagrant grafana.gaggl.vagrant ingress.gaggl.vagrant logs.gaggl.vagrant loki.gaggl.vagrant mail.gaggl.vagrant metrics.gaggl.vagrant mimir.gaggl.vagrant nomad.gaggl.vagrant status.gaggl.vagrant s3.gaggl.vagrant traces.gaggl.vagrant tempo.gaggl.vagrant vault.gaggl.vagrant webapp.gaggl.vagrant zipkin.gaggl.vagrant"
     box: bento/centos-7.9
     hostname: mgmt.gaggl.vagrant
     ip: 192.168.56.40
-    memory: 2560
+    cpus: 4
+    memory: 6144
+    disks:
+      - name: nomad
+        size: 10
     provision_shell: |
       export VAULT_ADDR=http://$(hostname --all-ip-addresses | awk '{print $2}'):8200
       function initialize_vault {

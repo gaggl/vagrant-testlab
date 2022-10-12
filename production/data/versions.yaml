@@ -1,8 +1,6 @@
 ---
-profiles::monitoring::prometheus::node_exporter::version: '1.4.0'
+profiles::monitoring::grafana_agent::version: 'v0.28.0'
 profiles::orchestration::consul::version: '1.13.2'
 profiles::scheduling::nomad::cni_plugins::version: 'v1.1.1'
-profiles::scheduling::nomad::version: '1.3.5'
-profiles::security::vault::version: '1.11.4'
-profiles::website::traefik2::version: '2.8.8'
+profiles::scheduling::nomad::version: '1.4.1'
 ...

@@ -52,3 +52,24 @@
 [submodule "fixtures/grafana"]
 	path = fixtures/grafana
 	url = git@github.com:gaggl/grafana-dashboards.git
+[submodule "production/modules/grafana_agent"]
+	path = production/modules/grafana_agent
+	url = git@github.com:attachmentgenie/attachmentgenie-grafana_agent.git
+[submodule "production/modules/resolv_conf"]
+	path = production/modules/resolv_conf
+	url = https://github.com/saz/puppet-resolv_conf.git
+[submodule "production/modules/dnsmasq"]
+	path = production/modules/dnsmasq
+	url = https://github.com/saz/puppet-dnsmasq.git
+[submodule "production/modules/concat"]
+	path = production/modules/concat
+	url = https://github.com/puppetlabs/puppetlabs-concat.git
+[submodule "production/modules/promtail"]
+	path = production/modules/promtail
+	url = https://github.com/grafana/puppet-promtail.git
+[submodule "production/modules/lvm"]
+	path = production/modules/lvm
+	url = https://github.com/puppetlabs/puppetlabs-lvm.git
+[submodule "production/modules/dns"]
+	path = production/modules/dns
+	url = https://github.com/theforeman/puppet-dns.git

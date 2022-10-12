@@ -5,8 +5,59 @@ profiles::bootstrap::firewall: true
 profiles::bootstrap::firewall::purge: false
 profiles::bootstrap::repos: true
 profiles::bootstrap::repositories::hashicorp: true
-profiles::monitoring::prometheus: true
-profiles::monitoring::prometheus::manage_sd_service: true
+profiles::bootstrap::resolv: true
+profiles::bootstrap::resolv::name_servers:
+  - 192.168.56.40
+  - 10.0.2.3
+profiles::monitoring::grafana_agent: true
+profiles::monitoring::grafana_agent::tempo_config_hash:
+  integrations:
+    node_exporter:
+      enabled: true
+  logs:
+    positions_directory: /tmp/grafana-agent/positions
+    configs:
+      - name: '%{::hostname}'
+        positions:
+          filename: /tmp/positions.yaml
+        clients:
+        - url: http://loki.gaggl.vagrant/loki/api/v1/push
+        scrape_configs:
+        - job_name: system
+          pipeline_stages:
+          - docker:
+          static_configs:
+          - targets:
+              - localhost
+            labels:
+              job: varlogs
+              host: '%{::hostname}'
+              __path__: /var/log/*.log
+  metrics:
+    wal_directory: /tmp/grafana-agent/wal
+    global:
+      scrape_interval: 15s
+      remote_write:
+        - url: http://mimir.gaggl.vagrant/api/v1/push
+    configs:
+      - name: '%{::hostname}'
+        scrape_configs:
+          - job_name: agent
+            static_configs:
+              - targets: ["127.0.0.1:9090"]
+  traces:
+    configs:
+      - name: '%{::hostname}'
+        batch:
+          timeout: 5s
+          send_batch_size: 100
+        receivers:
+          zipkin:
+        remote_write:
+          - endpoint: tempo.gaggl.vagrant
+            insecure: true
+        service_graphs:
+          enabled: true
 profiles::orchestration::consul: true
 profiles::orchestration::consul::config:
   client_addr: '0.0.0.0'
@@ -15,7 +66,7 @@ profiles::orchestration::consul::config:
 profiles::orchestration::consul::config_defaults:
   advertise_addr: '%{::ipaddress_eth1}'
   data_dir: /opt/consul
-  datacenter: services
+  datacenter: lab
   connect:
     enabled: true
   enable_central_service_config: true
@@ -41,6 +92,8 @@ profiles::scheduling::nomad::config_defaults:
     serf: '%{::ipaddress_eth1}:4648'
   consul:
     address: '127.0.0.1:8500'
+    client_service_name: 'nomad-client-lab'
+    server_service_name: 'nomad-server-lab'
   data_dir: /var/lib/nomad
   telemetry:
     collection_interval: '1s'
@@ -53,8 +106,7 @@ profiles::scheduling::nomad::config_defaults:
     address: 'http://active.vault.service.consul:8200'
     tls_skip_verify: true
 profiles::scheduling::nomad::consul_connect: true
-profiles::scheduling::nomad::install_method: url
-profiles::scheduling::nomad::manage_service_file: true
+profiles::scheduling::nomad::install_method: package
 profiles::scheduling::nomad::sd_service_endpoint: 'http://%{::ipaddress_eth1}:4646'
 profiles::security::vault::install_method: repo
 profiles::security::vault::sd_service_endpoint: 'http://%{::ipaddress_eth1}:8200'
