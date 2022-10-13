@@ -33,6 +33,14 @@ profiles::monitoring::grafana_agent::tempo_config_hash:
               job: varlogs
               host: '%{::hostname}'
               __path__: /var/log/*.log
+        - job_name: syslog
+          syslog:
+            listen_address: 0.0.0.0:1514
+            labels:
+              job: "syslog"
+          relabel_configs:
+            - source_labels: ['__syslog_message_hostname']
+              target_label: 'host'
   metrics:
     wal_directory: /tmp/grafana-agent/wal
     global:
