@@ -49,6 +49,4 @@
 [submodule "fixtures/nomad"]
 	path = fixtures/nomad
 	url = git@github.com:gaggl/nomad-jobs.git
-[submodule "fixtures/grafana"]
-	path = fixtures/grafana
-	url = git@github.com:gaggl/grafana-dashboards.git
+	branch = main
