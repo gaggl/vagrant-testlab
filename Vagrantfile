@@ -106,7 +106,7 @@ Vagrant.configure("2") do |config|
           end
         end
 
-        srv.vm.network :private_network, ip: node["ip"]
+        srv.vm.network :private_network, ip: node["ip"], virtualbox__intnet: true
         if node["aliases"]
           srv.hostmanager.aliases = node["aliases"]
         end
